@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        
+        <report
+            id="report_receipt_menu"
+            string="Receipt"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            file="account.invoice"
+            name="vit_invoice_receipt.receipt_report"
+        />
+
+        <template id="vit_invoice_receipt.receipt_report_document">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
+                    <div class="page">
+                        <h1>
+                            RECEIPT
+                        </h1>
+                        <p>
+                            Sudah terima dari <span t-field="doc.partner_id"/>
+                            uang sebesar <span t-field="doc.amount_total"/>
+                            (<i><span t-field="doc.amount_to_text"/></i>)
+                            untuk pelunasan invoice no <span t-field="doc.number"/>.
+                        </p>
+                        <p>
+                            Bandung, <t t-esc="time.strftime('%d %b %Y')"/>
+                        </p>
+                        <p>
+                            Yang menerima,
+                        </p>
+                        <p style="padding-top:2cm">
+                            ...............
+                        </p>
+                    </div>
+            </t>
+        </template>
+
+
+
+        <template id="vit_invoice_receipt.receipt_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="lang" t-value="doc.partner_id.lang"/>
+                    <t t-call="vit_invoice_receipt.receipt_report_document"/>
+                </t>    
+            </t>
+        </template>
+
+
+
+    </data>
+</odoo>
