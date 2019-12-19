@@ -14,7 +14,7 @@ class Invoice(models.Model):
     @api.depends('amount_total', 'currency_id')
     def _amount_to_text(self):
         for record in self:
-            record.amount_to_text = num2words(record.amount_total , 'id' , lang= 'id')
+            record.amount_to_text = num2words(record.amount_total ,lang= 'id' ) + " rupiah"
                 
 
     
